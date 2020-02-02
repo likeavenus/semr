@@ -25,4 +25,17 @@ code {
 a {
   text-decoration: none; }
 
+button {
+  background: none;
+  border: none; }
+
+h1, h2, h3, h4, p {
+  margin: 0; }
+
+ul {
+  padding: 0; }
+
+* {
+  touch-action: manipulation; }
+
 /*# sourceMappingURL=index.css.map */

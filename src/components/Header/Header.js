@@ -6,8 +6,7 @@ export default class Header extends Component {
     render() {
         return (
             <header className={styles.header}>
-                <img src={logo} alt=""/>
-                hello world
+                <img src={logo} alt="semrush"/>
             </header>
         );
     }

@@ -2,4 +2,11 @@
 
 .header {
   width: 100%;
+  background: #2A2E32;
+  height: 50px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
