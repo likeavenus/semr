@@ -9,8 +9,10 @@ const initialState = [];
 const store = createStore(getCardsList, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 function getCardsList(state = initialState, action) {
-    return [...state];
+    return {...state};
 }
+
+console.log(store.getState())
 
 ReactDOM.render(
     <Provider store={store}>
