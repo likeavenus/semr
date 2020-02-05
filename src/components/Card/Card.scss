@@ -1,0 +1,37 @@
+@import "../../variables";
+
+.card {
+  width: 280px;
+  margin: 0 auto;
+  border-radius: 6px;
+  background: #FFFFFF;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  padding-bottom: 30px;
+  overflow: hidden;
+}
+
+.card_image_box {
+  width: 100%;
+  max-height: 160px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.card_info {
+  padding: 0 24px;
+}
+
+.card_title {
+  font-size: 24px;
+  line-height: 32px;
+  font-family: $fontMedium;
+  font-weight: normal;
+  margin-bottom: 16px;
+}
+
+.card_text {
+  font-family: $fontReg;
+  font-size: 16px;
+  line-height: 24px;
+  color: rgba(0,0,0, .6);
+}

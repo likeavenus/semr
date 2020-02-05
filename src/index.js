@@ -8,7 +8,8 @@ import {Provider} from "react-redux";
 import {CREATE_CARD} from "./actions/createCard";
 
 const initialState = {
-    cards: []
+    cards: [],
+    pages: 1
 };
 
 
