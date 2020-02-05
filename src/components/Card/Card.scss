@@ -8,6 +8,22 @@
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
   padding-bottom: 30px;
   overflow: hidden;
+  margin-bottom: 20px;
+
+  @media (min-width: $tablet) {
+    width: 346px;
+    margin-left: 0;
+    margin-right: 20px;
+    margin-bottom: 40px;
+
+    &:nth-child(2n) {
+      margin-right: 0;
+    }
+  }
+
+  @media (min-width: $laptop) {
+    margin-right: 38px;
+  }
 }
 
 .card_image_box {
