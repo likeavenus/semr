@@ -15,7 +15,8 @@ class CreateBox extends Component {
         this.state = {
             inputFile: '',
             inputTitle: '',
-            inputDescription: ''
+            inputDescription: '',
+            popupIsActive: false
         };
     }
 
@@ -52,20 +53,40 @@ class CreateBox extends Component {
         }
     };
 
+    handleOpenEditMenu = () => {
+        this.setState({
+            popupIsActive: true
+        })
+    };
+
+    handleCloseEditMenu = () => {
+        this.setState({
+            popupIsActive: false
+        })
+    }
+
     render() {
 
-        const {inputFile, inputTitle, inputDescription} = this.state;
+        const {inputFile, inputTitle, inputDescription, popupIsActive} = this.state;
+
+        let overlayStyles = styles.overlay;
+
+        if (popupIsActive) {
+            overlayStyles += ` ${styles.active}`;
+        }
+
         return (
             <section className={styles.create_box}>
                 <div className={styles.create_content}>
                     <h1 className={styles.create_title}>Webinars</h1>
                     <p className={styles.create_text}>Here you can register and take part in educational webinars conducted by the best digital marketing experts</p>
 
-                    <button className={styles.create_btn} type={'button'}>Add new</button>
+                    <button onClick={this.handleOpenEditMenu} className={styles.create_btn} type={'button'}>Add new</button>
                 </div>
 
-                <div className={styles.overlay}>
+                <div className={overlayStyles}>
                     <form action="" className={styles.form}>
+                        <button onClick={this.handleCloseEditMenu} className={styles.close_btn} type={'button'}></button>
                         <h3 className={styles.form_title}>Add new</h3>
                         <label ref={this.labelFile} htmlFor={'inputFile'} className={styles.form_drag_pole}>
                             <img className={styles.form_icon} src={fileIcon} alt="file-icon"/>
