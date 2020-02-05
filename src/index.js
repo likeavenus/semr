@@ -8,7 +8,7 @@ import {Provider} from "react-redux";
 import {CREATE_CARD} from "./actions/createCard";
 
 const initialState = {
-    cards: [{}]
+    cards: []
 };
 
 
@@ -16,7 +16,7 @@ const initialState = {
 function getCardsList(state = initialState, action) {
     switch (action.type) {
         case CREATE_CARD:
-            return {...state};
+            return {...state, cards: [...state.cards, action.payload]};
         default: return {...state};
     }
 }

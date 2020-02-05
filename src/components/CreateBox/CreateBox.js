@@ -8,6 +8,10 @@ class CreateBox extends Component {
     constructor(props) {
         super(props);
 
+        this.labelFile = React.createRef();
+        this.inputTitle = React.createRef();
+        this.inputDescription = React.createRef();
+
         this.state = {
             inputFile: '',
             inputTitle: '',
@@ -16,14 +20,36 @@ class CreateBox extends Component {
     }
 
     handleChangeInput = (event) => {
-        console.log(event.target.id);
         this.setState({
             [event.target.id]: event.target.value
         });
     };
 
+    handleCheckIsValidForm = (callback) => {
+        const {inputFile, inputTitle, inputDescription} = this.state;
+        if (inputFile.trim() !== '' && inputTitle.trim() !== '' && inputDescription.trim() !== '') {
+            callback();
+        }
+    };
+
     handleSaveCard = (action, payload) => {
-        this.props.onSaveCard(action, payload)
+        const {inputFile, inputTitle, inputDescription} = this.state;
+
+        this.handleCheckIsValidForm(()=> {this.props.onSaveCard(action, payload)});
+
+        this.inputTitle.current.style.border = '1px solid #A6B0B3';
+        this.labelFile.current.style.border = '1px solid #DEE3E5';
+        this.inputDescription.current.style.border = '1px solid #A6B0B3';
+
+        if (inputTitle.trim() === '' ) {
+            this.inputTitle.current.style.border = '1px solid red';
+        }
+        if (inputFile.trim() === '') {
+            this.labelFile.current.style.border = '1px solid red';
+        }
+        if (inputDescription.trim() === '') {
+            this.inputDescription.current.style.border = '1px solid red';
+        }
     };
 
     render() {
@@ -41,18 +67,18 @@ class CreateBox extends Component {
                 <div className={styles.overlay}>
                     <form action="" className={styles.form}>
                         <h3 className={styles.form_title}>Add new</h3>
-                        <label htmlFor={'inputFile'} className={styles.form_drag_pole}>
+                        <label ref={this.labelFile} htmlFor={'inputFile'} className={styles.form_drag_pole}>
                             <img className={styles.form_icon} src={fileIcon} alt="file-icon"/>
                             <p className={styles.form_label}>select an image file to upload <span>or drag it here</span></p>
                         </label>
 
-                        <input id={'inputFile'} value={this.state.inputFile} onChange={(e)=> {this.handleChangeInput(e)}} className={styles.input_file} name={'file'} type={'file'}/>
+                        <input  id={'inputFile'} value={inputFile} onChange={(e)=> {this.handleChangeInput(e)}} className={styles.input_file} name={'file'} type={'file'}/>
 
                         <label className={styles.input_label} htmlFor="inputTitle">Title</label>
-                        <input onInput={(e)=> {this.handleChangeInput(e)}} placeholder={'Enter title'} className={styles.form_input} type="text" name={'title'} id={'inputTitle'}/>
+                        <input ref={this.inputTitle} onInput={(e)=> {this.handleChangeInput(e)}} placeholder={'Enter title'} className={styles.form_input} type="text" name={'title'} id={'inputTitle'}/>
 
                         <label className={styles.input_label} htmlFor={"inputDescription"}>Description</label>
-                        <textarea onInput={(e)=> {this.handleChangeInput(e)}} className={styles.form_area} name={'description'} id={'inputDescription'}/>
+                        <textarea ref={this.inputDescription} onInput={(e)=> {this.handleChangeInput(e)}} className={styles.form_area} name={'description'} id={'inputDescription'}/>
 
                         <button onClick={()=> {this.handleSaveCard(CREATE_CARD, {inputFile, inputTitle, inputDescription})}} className={styles.save_button} type={'button'}>Save</button>
 
