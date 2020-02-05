@@ -60,21 +60,34 @@
 }
 
 .form {
-  width: 320px;
+  width: 280px;
   background: #FFFFFF;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
   border-radius: 6px;
+  box-sizing: border-box;
 
-  padding: 32px 40px 40px 40px;
+  padding: 20px;
+
+  @media (min-width: $tablet) {
+    padding: 32px 40px 40px 40px;
+    width: 399px;
+  }
 }
 
 
 .form_title {
   font-family: $fontMedium;
-  font-size: 32px;
-  line-height: 38px;
+  font-size: 29px;
+  line-height: 36px;
   color: #424242;
-  margin-bottom: 31px;
+  margin-bottom: 10px;
+  font-weight: normal;
+
+  @media (min-width: $tablet) {
+    margin-bottom: 31px;
+    font-size: 32px;
+    line-height: 38px;
+  }
 }
 
 .form_drag_pole {
@@ -84,4 +97,93 @@
   border: 1px solid #DEE3E5;
   box-sizing: border-box;
   border-radius: 5px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.input_file {
+  display: none;
+}
+
+.form_icon {
+  width: 44px;
+  height: 44px;
+  margin-bottom: 24px;
+}
+
+.form_label {
+  font-size: 14px;
+  line-height: 16px;
+  font-family: $fontReg;
+  color: #2B94E1;
+  text-align: center;
+
+  & span {
+    display: none;
+  }
+
+  @media (min-width: $laptop) {
+    & span {
+      display: inline;
+    }
+  }
+}
+
+.input_label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 16px;
+  line-height: 22px;
+  color: #333333;
+  font-family: $fontReg;
+}
+
+.form_input {
+  margin-bottom: 24px;
+  width: 100%;
+  background: #FFFFFF;
+  border: 1px solid #A6B0B3;
+  box-sizing: border-box;
+  border-radius: 5px;
+  font-size: 16px;
+  line-height: 22px;
+  font-family: $fontReg;
+  padding: 9px 11px 11px;
+}
+
+.form_area {
+  margin-bottom: 32px;
+  width: 100%;
+  height: 88px;
+  background: #FFFFFF;
+  border: 1px solid #A6B0B3;
+  box-sizing: border-box;
+  border-radius: 5px;
+  font-size: 16px;
+  line-height: 22px;
+  font-family: $fontReg;
+  padding: 9px 11px 11px;
+  resize: none;
+}
+
+.save_button {
+  width: 74px;
+  height: 42px;
+  background: #4FAE33;
+  border-radius: 5px;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+
+  font-size: 16px;
+  line-height: 20px;
+  color: #fff;
+  font-family: $fontReg;
+  margin: 0 auto;
 }
