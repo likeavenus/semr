@@ -43,3 +43,45 @@
   font-family: $fontReg;
   cursor: pointer;
 }
+
+.overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,.8);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+.form {
+  width: 320px;
+  background: #FFFFFF;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+
+  padding: 32px 40px 40px 40px;
+}
+
+
+.form_title {
+  font-family: $fontMedium;
+  font-size: 32px;
+  line-height: 38px;
+  color: #424242;
+  margin-bottom: 31px;
+}
+
+.form_drag_pole {
+  width: 100%;
+  height: 149px;
+  background: #E4ECF1;
+  border: 1px solid #DEE3E5;
+  box-sizing: border-box;
+  border-radius: 5px;
+}

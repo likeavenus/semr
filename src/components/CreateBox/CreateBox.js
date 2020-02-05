@@ -12,10 +12,14 @@ export default class CreateBox extends Component {
                     <button className={styles.create_btn} type={'button'}>Add new</button>
                 </div>
 
-                <form action="" className={styles.form}>
-                    <h3 className={styles.form_title}>Add new</h3>
+                <div className={styles.overlay}>
+                    <form action="" className={styles.form}>
+                        <h3 className={styles.form_title}>Add new</h3>
+                        <div className={styles.form_drag_pole}></div>
 
-                </form>
+                    </form>
+                </div>
+
 
             </section>
         );
