@@ -9,6 +9,7 @@ import {CREATE_CARD} from "./actions/createCard";
 
 const initialState = {
     cards: [],
+    totalWeight: 0,
     pages: 1
 };
 

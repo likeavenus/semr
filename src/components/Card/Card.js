@@ -14,9 +14,10 @@ export default class Card extends Component {
 
         if (this.props.type.toLowerCase() === 'big') {
             cardStyles += ` ${styles.big}`;
+
             imageBox = null;
             cardStyleBackground = {
-                backgroundImage: 'url(' + this.props.file + ')',
+                backgroundImage: `url(${this.props.file})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center'
             }

@@ -37,5 +37,10 @@ class Section extends Component {
 export default connect(
     state => ({
         store: state
+    }),
+    dispatch => ({
+        onIncreaseWeight: (action, payload) => {
+            dispatch({type: action, payload: payload})
+        }
     }))
 (Section);

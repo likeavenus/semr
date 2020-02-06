@@ -39,6 +39,10 @@ class CreateBox extends Component {
             this.setState({
                 [event.target.id]: event.target.value
             });
+
+            if (this.state.type === 'big') {
+                this.setState({weight: 2})
+            }
         }
 
     };
@@ -52,6 +56,7 @@ class CreateBox extends Component {
                 inputTitle: '',
                 inputDescription: '',
                 type: '',
+                weight: 1,
                 popupIsActive: false
             })
         }
@@ -89,6 +94,7 @@ class CreateBox extends Component {
             inputTitle: '',
             inputDescription: '',
             type: '',
+            weight: 1,
             popupIsActive: false,
         })
     };
@@ -146,7 +152,7 @@ class CreateBox extends Component {
 
     render() {
 
-        const {inputFile, inputTitle, inputDescription, popupIsActive, file, type} = this.state;
+        const {inputFile, inputTitle, inputDescription, popupIsActive, file, type, weight} = this.state;
 
         let overlayStyles = styles.overlay;
         let fileLabelStyles = styles.form_drag_pole;
@@ -191,12 +197,12 @@ class CreateBox extends Component {
                         <input value={inputTitle} ref={this.inputTitle} onChange={(e)=> {this.handleChangeInput(e)}} placeholder={'Enter title'} className={styles.form_input} type="text" name={'title'} id={'inputTitle'}/>
 
                         <label className={styles.input_label} htmlFor="type">Type</label>
-                        <input value={this.state.type} onChange={(e)=> {this.handleChangeInput(e)}} className={styles.form_input} type="text" id={'type'} name={'type'} placeholder={'Enter "big", if you need big card'}/>
+                        <input value={type} onChange={(e)=> {this.handleChangeInput(e)}} className={styles.form_input} type="text" id={'type'} name={'type'} placeholder={'Enter "big", if you need big card'}/>
 
                         <label className={styles.input_label} htmlFor={"inputDescription"}>Description</label>
                         <textarea placeholder={'Enter description'} value={inputDescription} ref={this.inputDescription} onChange={(e)=> {this.handleChangeInput(e)}} className={styles.form_area} name={'description'} id={'inputDescription'}/>
 
-                        <button onClick={()=> {this.handleSaveCard(CREATE_CARD, {file, inputTitle, inputDescription, type})}} className={styles.save_button} type={'button'}>Save</button>
+                        <button onClick={()=> {this.handleSaveCard(CREATE_CARD, {file, inputTitle, inputDescription, type, weight})}} className={styles.save_button} type={'button'}>Save</button>
 
                     </form>
                 </div>
