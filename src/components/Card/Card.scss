@@ -23,6 +23,14 @@
 
   @media (min-width: $laptop) {
     margin-right: 38px;
+
+    &:nth-child(2n) {
+      margin-right: 38px;
+    }
+
+    &:nth-child(3n) {
+      margin-right: 0;
+    }
   }
 }
 
@@ -50,4 +58,10 @@
   font-size: 16px;
   line-height: 24px;
   color: rgba(0,0,0, .6);
+}
+
+.card_image {
+  max-width: 100%;
+  height: auto;
+  width: auto;
 }

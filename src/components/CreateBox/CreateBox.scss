@@ -108,11 +108,17 @@
   box-sizing: border-box;
   border-radius: 5px;
 
+  overflow: hidden;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-bottom: 24px;
+
+  &.active {
+    height: 198px;
+  }
 }
 
 .input_file {
@@ -123,14 +129,16 @@
   width: 44px;
   height: 44px;
   margin-bottom: 24px;
+  pointer-events: none;
 }
 
-.form_label {
+.form_info {
   font-size: 14px;
   line-height: 16px;
   font-family: $fontReg;
   color: #2B94E1;
   text-align: center;
+  pointer-events: none;
 
   & span {
     display: none;
@@ -207,4 +215,8 @@
   position: absolute;
   top: 9px;
   right: 8px;
+}
+
+.file_image {
+  width: 100%;
 }

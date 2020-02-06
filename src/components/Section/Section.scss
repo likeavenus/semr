@@ -11,4 +11,9 @@
     margin: 0 auto;
     justify-content: space-between;
   }
+
+  @media (min-width: $laptop) {
+    width: 1114px;
+    justify-content: flex-start;
+  }
 }

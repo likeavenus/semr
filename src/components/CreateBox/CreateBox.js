@@ -7,31 +7,48 @@ import {CREATE_CARD} from "../../actions/createCard";
 class CreateBox extends Component {
     constructor(props) {
         super(props);
-
+        // Рефы здесь только для косметических изменений
         this.labelFile = React.createRef();
+        this.inputFile = React.createRef();
         this.inputTitle = React.createRef();
         this.inputDescription = React.createRef();
 
         this.state = {
             inputFile: '',
+            file: null,
             inputTitle: '',
             inputDescription: '',
-            popupIsActive: false
+            popupIsActive: false,
+            dragging: false,
         };
     }
 
     handleChangeInput = (event) => {
-        this.setState({
-            [event.target.id]: event.target.value
-        });
+        console.log(event.target.result);
+        if (event.target.id === 'inputFile') {
+            let reader = new FileReader();
+            reader.readAsDataURL(event.target.files[0]);
+            reader.onload = () => {
+                this.setState({
+                    file: reader.result
+                })
+            };
+            console.log(reader);
+
+        } else {
+            this.setState({
+                [event.target.id]: event.target.value
+            });
+        }
+
     };
 
     handleCheckIsValidForm = (callback) => {
-        const {inputFile, inputTitle, inputDescription} = this.state;
-        if (inputFile.trim() !== '' && inputTitle.trim() !== '' && inputDescription.trim() !== '') {
+        const {file, inputTitle, inputDescription} = this.state;
+        if (file.trim() !== '' && inputTitle.trim() !== '' && inputDescription.trim() !== '') {
             callback();
             this.setState({
-                inputFile: '',
+                file: null,
                 inputTitle: '',
                 inputDescription: '',
                 popupIsActive: false
@@ -40,7 +57,7 @@ class CreateBox extends Component {
     };
 
     handleSaveCard = (action, payload) => {
-        const {inputFile, inputTitle, inputDescription} = this.state;
+        const {inputTitle, inputDescription, file} = this.state;
 
         this.handleCheckIsValidForm(()=> {this.props.onSaveCard(action, payload)});
 
@@ -51,7 +68,7 @@ class CreateBox extends Component {
         if (inputTitle.trim() === '' ) {
             this.inputTitle.current.style.border = '1px solid red';
         }
-        if (inputFile.trim() === '') {
+        if (file.trim() === '') {
             this.labelFile.current.style.border = '1px solid red';
         }
         if (inputDescription.trim() === '') {
@@ -69,16 +86,81 @@ class CreateBox extends Component {
         this.setState({
             popupIsActive: false,
         })
+    };
+
+    // drag and drop logic
+
+    handleDrag = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        console.log(e);
+    };
+
+    handleDragIn = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+    };
+
+    handleDragOut = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+
+        this.setState({
+            dragging: false
+        });
+    };
+
+    handleDrop = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        this.labelFile.current.style.border = '1px solid #DEE3E5';
+        this.setState({
+            dragged: false
+        });
+
+    };
+
+    componentDidMount() {
+        const labelElem = this.labelFile.current;
+        labelElem.addEventListener('dragenter', this.handleDrag);
+        labelElem.addEventListener('dragleave', this.handleDragIn);
+        labelElem.addEventListener('dragover', this.handleDragOut);
+        labelElem.addEventListener('drop', this.handleDrop);
+    }
+
+    componentWillUnmount() {
+        const labelElem = this.labelFile.current;
+        labelElem.removeEventListener('dragenter', this.handleDragIn);
+        labelElem.removeEventListener('dragleave', this.handleDragOut);
+        labelElem.removeEventListener('dragover', this.handleDrag);
+        labelElem.removeEventListener('drop', this.handleDrop);
     }
 
     render() {
 
-        const {inputFile, inputTitle, inputDescription, popupIsActive} = this.state;
+        const {inputTitle, inputDescription, popupIsActive, file} = this.state;
 
         let overlayStyles = styles.overlay;
+        let fileLabelStyles = styles.form_drag_pole;
 
         if (popupIsActive) {
             overlayStyles += ` ${styles.active}`;
+        }
+
+
+        let bodyLabel = <>
+            <img className={styles.form_icon} src={fileIcon} alt="file-icon"/>
+            <p className={styles.form_info}>select an image file to upload <span>or drag it here</span></p>
+        </>;
+
+        if (file !== null) {
+            fileLabelStyles += ` ${styles.active}`;
+            bodyLabel = <>
+                <img className={styles.file_image} src={file} alt="preview-image"/>
+            </>;
         }
 
         return (
@@ -94,20 +176,19 @@ class CreateBox extends Component {
                     <form action="" className={styles.form}>
                         <button onClick={this.handleCloseEditMenu} className={styles.close_btn} type={'button'}></button>
                         <h3 className={styles.form_title}>Add new</h3>
-                        <label ref={this.labelFile} htmlFor={'inputFile'} className={styles.form_drag_pole}>
-                            <img className={styles.form_icon} src={fileIcon} alt="file-icon"/>
-                            <p className={styles.form_label}>select an image file to upload <span>or drag it here</span></p>
+                        <label ref={this.labelFile} htmlFor={'inputFile'} className={fileLabelStyles}>
+                            {bodyLabel}
                         </label>
 
-                        <input value={this.state.inputFile} id={'inputFile'} onChange={(e)=> {this.handleChangeInput(e)}} className={styles.input_file} name={'file'} type={'file'}/>
+                        <input ref={this.inputFile} value={this.state.inputFile} id={'inputFile'} onChange={(e)=> {this.handleChangeInput(e)}} className={styles.input_file} name={'file'} type={'file'}/>
 
                         <label className={styles.input_label} htmlFor="inputTitle">Title</label>
                         <input value={this.state.inputTitle} ref={this.inputTitle} onChange={(e)=> {this.handleChangeInput(e)}} placeholder={'Enter title'} className={styles.form_input} type="text" name={'title'} id={'inputTitle'}/>
 
                         <label className={styles.input_label} htmlFor={"inputDescription"}>Description</label>
-                        <textarea value={this.state.inputDescription} ref={this.inputDescription} onChange={(e)=> {this.handleChangeInput(e)}} className={styles.form_area} name={'description'} id={'inputDescription'}/>
+                        <textarea placeholder={'Enter description'} value={this.state.inputDescription} ref={this.inputDescription} onChange={(e)=> {this.handleChangeInput(e)}} className={styles.form_area} name={'description'} id={'inputDescription'}/>
 
-                        <button onClick={()=> {this.handleSaveCard(CREATE_CARD, {inputFile, inputTitle, inputDescription})}} className={styles.save_button} type={'button'}>Save</button>
+                        <button onClick={()=> {this.handleSaveCard(CREATE_CARD, {file, inputTitle, inputDescription})}} className={styles.save_button} type={'button'}>Save</button>
 
                     </form>
                 </div>

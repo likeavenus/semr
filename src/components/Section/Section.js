@@ -12,6 +12,7 @@ class Section extends Component {
             cardsArray.push(
                 <Card
                     key={id}
+                    file={i.file}
                     cardTitle={i.inputTitle}
                     cardText={i.inputDescription}
                 />
