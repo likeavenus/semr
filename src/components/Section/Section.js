@@ -20,6 +20,7 @@ class Section extends Component {
                     file={i.file}
                     cardTitle={sliceText(i.inputTitle, 40)}
                     cardText={sliceText(i.inputDescription, 150)}
+                    type={sliceText(i.type, 12)}
                 />
             );
             id += 1;
