@@ -7,14 +7,19 @@ class Section extends Component {
     render() {
         const storeCards = this.props.store.cards;
         const cardsArray = [];
+
+        function sliceText(string, maxLength) {
+            return string.length > maxLength ? string.slice(0, maxLength) + '...' : string;
+        }
         let id = 0;
         for (let i of storeCards) {
+
             cardsArray.push(
                 <Card
                     key={id}
                     file={i.file}
-                    cardTitle={i.inputTitle}
-                    cardText={i.inputDescription}
+                    cardTitle={sliceText(i.inputTitle, 40)}
+                    cardText={sliceText(i.inputDescription, 150)}
                 />
             );
             id += 1;

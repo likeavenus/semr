@@ -2,22 +2,30 @@
 
 .card {
   width: 280px;
-  margin: 0 auto;
+  height: 380px;
+  margin: 0 auto 20px;
   border-radius: 6px;
   background: #FFFFFF;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
   padding-bottom: 30px;
   overflow: hidden;
-  margin-bottom: 20px;
+  position: relative;
 
   @media (min-width: $tablet) {
     width: 346px;
+    height: 424px;
     margin-left: 0;
     margin-right: 20px;
     margin-bottom: 40px;
 
     &:nth-child(2n) {
       margin-right: 0;
+    }
+
+    &:hover {
+      .card_title {
+        text-decoration: underline;
+      }
     }
   }
 
@@ -43,6 +51,7 @@
 
 .card_info {
   padding: 0 24px;
+  height: auto;
 }
 
 .card_title {
@@ -51,6 +60,9 @@
   font-family: $fontMedium;
   font-weight: normal;
   margin-bottom: 16px;
+  word-break: break-all;
+  color: #000;
+  text-decoration: none;
 }
 
 .card_text {
@@ -58,10 +70,15 @@
   font-size: 16px;
   line-height: 24px;
   color: rgba(0,0,0, .6);
+  width: 100%;
+  word-break: break-all;
+  text-decoration: none;
+
 }
 
 .card_image {
   max-width: 100%;
+  margin: 0 auto;
   height: auto;
   width: auto;
 }

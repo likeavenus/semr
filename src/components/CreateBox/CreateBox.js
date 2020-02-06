@@ -18,13 +18,14 @@ class CreateBox extends Component {
             file: null,
             inputTitle: '',
             inputDescription: '',
+            weight: 1,
+            type: '',
             popupIsActive: false,
             dragging: false,
         };
     }
 
     handleChangeInput = (event) => {
-        console.log(event.target.result);
         if (event.target.id === 'inputFile') {
             let reader = new FileReader();
             reader.readAsDataURL(event.target.files[0]);
@@ -33,7 +34,6 @@ class CreateBox extends Component {
                     file: reader.result
                 })
             };
-            console.log(reader);
 
         } else {
             this.setState({
@@ -45,7 +45,7 @@ class CreateBox extends Component {
 
     handleCheckIsValidForm = (callback) => {
         const {file, inputTitle, inputDescription} = this.state;
-        if (file.trim() !== '' && inputTitle.trim() !== '' && inputDescription.trim() !== '') {
+        if (file !== null && inputTitle.trim() !== '' && inputDescription.trim() !== '') {
             callback();
             this.setState({
                 file: null,
@@ -65,10 +65,10 @@ class CreateBox extends Component {
         this.labelFile.current.style.border = '1px solid #DEE3E5';
         this.inputDescription.current.style.border = '1px solid #A6B0B3';
 
-        if (inputTitle.trim() === '' ) {
+        if (inputTitle.trim() === '') {
             this.inputTitle.current.style.border = '1px solid red';
         }
-        if (file.trim() === '') {
+        if (file === null) {
             this.labelFile.current.style.border = '1px solid red';
         }
         if (inputDescription.trim() === '') {
@@ -84,6 +84,9 @@ class CreateBox extends Component {
 
     handleCloseEditMenu = () => {
         this.setState({
+            file: null,
+            inputTitle: '',
+            inputDescription: '',
             popupIsActive: false,
         })
     };
@@ -159,7 +162,7 @@ class CreateBox extends Component {
         if (file !== null) {
             fileLabelStyles += ` ${styles.active}`;
             bodyLabel = <>
-                <img className={styles.file_image} src={file} alt="preview-image"/>
+                <img className={styles.file_image} src={file} alt="preview"/>
             </>;
         }
 
