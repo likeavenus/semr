@@ -14,13 +14,14 @@
 
   @media (min-width: $tablet) {
     width: 346px;
-    margin-left: 0;
-    margin-right: 20px;
-    margin-bottom: 40px;
+    //margin-left: 0;
+    //margin-right: 20px;
+    //margin-bottom: 40px;
+    margin: 0;
 
 
     &:nth-child(2n) {
-      margin-right: 0;
+      //margin-right: 0;
     }
 
     &:hover {
@@ -31,15 +32,15 @@
   }
 
   @media (min-width: $laptop) {
-    margin-right: 38px;
+    //margin-right: 38px;
 
-    &:nth-child(2n) {
-      margin-right: 38px;
-    }
-
-    &:nth-child(3n) {
-      margin-right: 0;
-    }
+    //&:nth-child(2n) {
+    //  margin-right: 38px;
+    //}
+    //
+    //&:nth-child(3n) {
+    //  margin-right: 0;
+    //}
   }
 }
 
@@ -152,5 +153,12 @@
     & .card_info {
       padding-top: 290px;
     }
+  }
+
+  @media (min-width: $laptop) {
+    width: 729px;
+    //height: 392px;
+    //grid-column: 2;
+    grid-row: span 2;
   }
 }
