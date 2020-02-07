@@ -18,7 +18,7 @@ class CreateBox extends Component {
             file: null,
             inputTitle: '',
             inputDescription: '',
-            weight: 1,
+            weight: 0,
             type: '',
             popupIsActive: false,
             dragging: false,
@@ -38,27 +38,32 @@ class CreateBox extends Component {
         } else {
             this.setState({
                 [event.target.id]: event.target.value
+            }, ()=> {
+                if (this.state.type === 'big') {
+                    this.setState({weight: 2}, ()=>{console.log(this.state.weight)})
+                } else {
+                    this.setState({weight: 1}, ()=>{console.log(this.state.weight)})
+                }
             });
-
-            if (this.state.type === 'big') {
-                this.setState({weight: 2})
-            }
         }
+
+
 
     };
 
     handleCheckIsValidForm = (callback) => {
         const {file, inputTitle, inputDescription} = this.state;
         if (file !== null && inputTitle.trim() !== '' && inputDescription.trim() !== '') {
-            callback();
             this.setState({
                 file: null,
                 inputTitle: '',
                 inputDescription: '',
                 type: '',
-                weight: 1,
+                weight: 0,
                 popupIsActive: false
-            })
+            });
+
+            callback();
         }
     };
 
@@ -66,6 +71,7 @@ class CreateBox extends Component {
         const {inputTitle, inputDescription, file} = this.state;
 
         this.handleCheckIsValidForm(()=> {this.props.onSaveCard(action, payload)});
+
 
         this.inputTitle.current.style.border = '1px solid #A6B0B3';
         this.labelFile.current.style.border = '1px solid #DEE3E5';
@@ -94,7 +100,7 @@ class CreateBox extends Component {
             inputTitle: '',
             inputDescription: '',
             type: '',
-            weight: 1,
+            weight: 0,
             popupIsActive: false,
         })
     };
