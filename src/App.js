@@ -3,6 +3,7 @@ import './App.scss';
 import Header from "./components/Header/Header";
 import CreateBox from './components/CreateBox/CreateBox';
 import Section from "./components/Section/Section";
+import Pagination from "./components/Pagination/Pagination";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
         <Header/>
         <CreateBox/>
         <Section/>
+        <Pagination/>
     </div>
   );
 }

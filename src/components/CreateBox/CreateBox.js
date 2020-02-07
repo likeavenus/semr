@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import styles from './CreateBox.scss';
 import fileIcon from './img/file-icon.png';
 import {connect} from 'react-redux';
-import {CREATE_CARD} from "../../actions/createCard";
+import {CREATE_CARD} from "../../actions/actions";
 
 class CreateBox extends Component {
     constructor(props) {
@@ -40,9 +40,9 @@ class CreateBox extends Component {
                 [event.target.id]: event.target.value
             }, ()=> {
                 if (this.state.type === 'big') {
-                    this.setState({weight: 2}, ()=>{console.log(this.state.weight)})
+                    this.setState({weight: 2})
                 } else {
-                    this.setState({weight: 1}, ()=>{console.log(this.state.weight)})
+                    this.setState({weight: 1})
                 }
             });
         }

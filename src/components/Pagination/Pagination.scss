@@ -1,0 +1,26 @@
+@import "../../variables";
+
+
+.pagination {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 174px;
+    margin: 0 auto;
+}
+
+.link {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-right: 12px;
+    font-size: 16px;
+    line-height: 18px;
+    font-family: $fontReg;
+    color: #fff;
+    background: #2B94E1;
+}

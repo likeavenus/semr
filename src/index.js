@@ -5,12 +5,11 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {createStore} from "redux";
 import {Provider} from "react-redux";
-import {CREATE_CARD} from "./actions/createCard";
+import {CREATE_CARD} from "./actions/actions";
 
 const initialState = {
     cards: [],
     totalWeight: 0,
-    pages: 1
 };
 
 
@@ -18,7 +17,7 @@ const initialState = {
 function getCardsList(state = initialState, action) {
     switch (action.type) {
         case CREATE_CARD:
-            return {...state, cards: [...state.cards, action.payload]};
+            return {...state, cards: [...state.cards, action.payload], totalWeight: state.totalWeight += action.payload.weight };
         default: return {...state};
     }
 }
@@ -29,7 +28,7 @@ console.log(store.getState());
 
 store.subscribe(() => {
     console.log('getState', store.getState());
-})
+});
 
 ReactDOM.render(
     <Provider store={store}>

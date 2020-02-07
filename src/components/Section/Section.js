@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import styles from './Section.scss';
 import {connect} from 'react-redux';
 import Card from "../Card/Card";
-
 class Section extends Component {
     render() {
         const storeCards = this.props.store.cards;
@@ -37,10 +36,5 @@ class Section extends Component {
 export default connect(
     state => ({
         store: state
-    }),
-    dispatch => ({
-        onIncreaseWeight: (action, payload) => {
-            dispatch({type: action, payload: payload})
-        }
     }))
 (Section);
