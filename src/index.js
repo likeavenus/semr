@@ -8,8 +8,81 @@ import {Provider} from "react-redux";
 import {CREATE_CARD} from "./actions/actions";
 
 const initialState = {
-    cards: [],
+    cards: [
+        {
+            file: "",
+            inputTitle: "asda",
+            inputDescription: "asdad",
+            type: "",
+            weight: 1
+        },
+        {
+            file: "",
+            inputTitle: "asda",
+            inputDescription: "asdad",
+            type: "",
+            weight: 1
+        },
+        {
+            file: "",
+            inputTitle: "asda",
+            inputDescription: "asdad",
+            type: "",
+            weight: 1
+        },
+        {
+            file: "",
+            inputTitle: "asda",
+            inputDescription: "asdad",
+            type: "",
+            weight: 1
+        },
+        {
+            file: "",
+            inputTitle: "asda",
+            inputDescription: "asdad",
+            type: "",
+            weight: 1
+        },
+        {
+            file: "",
+            inputTitle: "asda",
+            inputDescription: "asdad",
+            type: "",
+            weight: 1
+        },
+        {
+            file: "",
+            inputTitle: "asda",
+            inputDescription: "asdad",
+            type: "",
+            weight: 1
+        },
+        {
+            file: "",
+            inputTitle: "asda",
+            inputDescription: "asdad",
+            type: "",
+            weight: 1
+        },
+        {
+            file: "",
+            inputTitle: "asda",
+            inputDescription: "asdad",
+            type: "",
+            weight: 1
+        },
+        {
+            file: "",
+            inputTitle: "asda",
+            inputDescription: "asdad",
+            type: "",
+            weight: 1
+        },
+
+    ],
     totalWeight: 0,
+    pages: 1
 };
 
 
@@ -17,7 +90,7 @@ const initialState = {
 function getCardsList(state = initialState, action) {
     switch (action.type) {
         case CREATE_CARD:
-            return {...state, cards: [...state.cards, action.payload], totalWeight: state.totalWeight += action.payload.weight };
+            return {...state, cards: [...state.cards, action.payload], totalWeight: state.totalWeight += action.payload.weight};
         default: return {...state};
     }
 }
