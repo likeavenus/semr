@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import styles from './CreateBox.scss';
 import fileIcon from './img/file-icon.png';
 import {connect} from 'react-redux';
-import {CREATE_CARD} from "../../actions/actions";
+import {CREATE_CARD, INCREASE_PAGES} from "../../actions/actions";
 
 class CreateBox extends Component {
     constructor(props) {
@@ -85,6 +85,10 @@ class CreateBox extends Component {
         }
         if (inputDescription.trim() === '') {
             this.inputDescription.current.style.border = '1px solid red';
+        }
+
+        if (this.props.store.totalWeight && this.props.store.totalWeight % 9 === 0) {
+            this.props.onIncreasePages(INCREASE_PAGES)
         }
     };
 
@@ -226,6 +230,9 @@ export default connect(
     dispatch => ({
         onSaveCard: (action, payload) => {
             dispatch({type: action, payload: payload})
+        },
+        onIncreasePages: (action) => {
+            dispatch({type: action})
         }
     })
 )(CreateBox);

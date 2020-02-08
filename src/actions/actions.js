@@ -1,1 +1,2 @@
 export const CREATE_CARD = 'CREATE_CARD';
+export const INCREASE_PAGES = 'INCREASE_PAGES';

@@ -5,82 +5,10 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {createStore} from "redux";
 import {Provider} from "react-redux";
-import {CREATE_CARD} from "./actions/actions";
+import {CREATE_CARD, INCREASE_PAGES} from "./actions/actions";
 
 const initialState = {
-    cards: [
-        {
-            file: "",
-            inputTitle: "asda",
-            inputDescription: "asdad",
-            type: "",
-            weight: 1
-        },
-        {
-            file: "",
-            inputTitle: "asda",
-            inputDescription: "asdad",
-            type: "",
-            weight: 1
-        },
-        {
-            file: "",
-            inputTitle: "asda",
-            inputDescription: "asdad",
-            type: "",
-            weight: 1
-        },
-        {
-            file: "",
-            inputTitle: "asda",
-            inputDescription: "asdad",
-            type: "",
-            weight: 1
-        },
-        {
-            file: "",
-            inputTitle: "asda",
-            inputDescription: "asdad",
-            type: "",
-            weight: 1
-        },
-        {
-            file: "",
-            inputTitle: "asda",
-            inputDescription: "asdad",
-            type: "",
-            weight: 1
-        },
-        {
-            file: "",
-            inputTitle: "asda",
-            inputDescription: "asdad",
-            type: "",
-            weight: 1
-        },
-        {
-            file: "",
-            inputTitle: "asda",
-            inputDescription: "asdad",
-            type: "",
-            weight: 1
-        },
-        {
-            file: "",
-            inputTitle: "asda",
-            inputDescription: "asdad",
-            type: "",
-            weight: 1
-        },
-        {
-            file: "",
-            inputTitle: "asda",
-            inputDescription: "asdad",
-            type: "",
-            weight: 1
-        },
-
-    ],
+    cards: [],
     totalWeight: 0,
     pages: 1
 };
@@ -91,6 +19,8 @@ function getCardsList(state = initialState, action) {
     switch (action.type) {
         case CREATE_CARD:
             return {...state, cards: [...state.cards, action.payload], totalWeight: state.totalWeight += action.payload.weight};
+        case INCREASE_PAGES:
+            return {...state, pages: state.pages += 1};
         default: return {...state};
     }
 }
