@@ -32,7 +32,6 @@ class App extends Component {
         });
     };
 
-
     render() {
 
         const RoutesArray = [];
@@ -73,14 +72,18 @@ class App extends Component {
 
         // console.log('ARRAY', cardsArray);
 
+
+
         for (let i = 0; i < pages; i++) {
             RoutesArray.push(
-                <Route key={i} render={(...props)=> <Section {...props} children={cardsArray}/>} exact path={`/:pageId`}/>
+                <Route key={i} render={(...props)=> <Section key={multiplier} {...props} children={cardsArray}/>} exact path={`/:pageId`}/>
             );
             LinksArray.push(
                 <Link key={i} onClick={()=> {this.handleOnLinkClick(i)}} className={pageStyles.link} to={`/${i+1}`}>{i + 1}</Link>
             )
         }
+
+
 
         return (
             <HashRouter basename={'/page'}>
