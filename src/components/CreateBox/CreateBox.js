@@ -75,7 +75,6 @@ class CreateBox extends Component {
 
         this.handleCheckIsValidForm(()=> {this.props.onSaveCard(action, payload)});
 
-
         this.inputTitle.current.style.border = '1px solid #A6B0B3';
         this.labelFile.current.style.border = '1px solid #DEE3E5';
         this.inputDescription.current.style.border = '1px solid #A6B0B3';
@@ -245,6 +244,9 @@ export default connect(
         },
         onIncreasePages: (action) => {
             dispatch({type: action})
+        },
+        handleUpdateCurrentArray: (action, payload) => {
+            dispatch({type: action, payload})
         }
     })
 )(CreateBox);

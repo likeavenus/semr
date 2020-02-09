@@ -13,6 +13,7 @@ import {
     Link
 } from "react-router-dom";
 import Card from "./components/Card/Card";
+import {UPDATE_CURRENT_CARDS} from "./actions/actions";
 
 
 class App extends Component {
@@ -26,20 +27,26 @@ class App extends Component {
     }
 
     handleOnLinkClick = (id) => {
-        console.log(id);
         this.setState({
             multiplier: id
         });
     };
 
+    componentDidUpdate(prevProps) {
+        if (prevProps !== this.props) {
+
+        }
+    }
+
     render() {
+
 
         const RoutesArray = [];
         const LinksArray = [];
-        const {pages, cards, totalWeight} = this.props.store;
+        const {pages, cards, currentArray, totalWeight} = this.props.store;
 
         let cardsArray = [];
-
+        // обрезаем слишком длинные строки
         function sliceText(string, maxLength) {
             return string.length > maxLength ? string.slice(0, maxLength) + '...' : string;
         }
@@ -63,20 +70,23 @@ class App extends Component {
         cardsArray = cardsArray.slice(multiplier * MAX_CARDS, (multiplier * MAX_CARDS) + MAX_CARDS);
 
         for (let i = 0; i < pages; i++) {
-            RoutesArray.push(
-                <Route key={i} render={(...props)=> <Section key={multiplier} {...props} children={cardsArray}/>} exact path={`/:pageId`}/>
-            );
+            // RoutesArray.push(
+            //     <Route key={i} render={()=> <Section key={multiplier} children={cardsArray}/>} exact path={`/:pageId`}/>
+            // );
             LinksArray.push(
                 <Link key={i} onClick={()=> {this.handleOnLinkClick(i)}} className={pageStyles.link} to={`/${i+1}`}>{i + 1}</Link>
             )
         }
 
         return (
-                <HashRouter basename={'/page'}>
+            <HashRouter basename={'/page'}>
                 <div className="App">
                     <Header/>
                     <CreateBox/>
-                    <Switch>{RoutesArray}</Switch>
+                    {/*<Switch>{RoutesArray}</Switch>*/}
+                    <Switch>
+                        <Route exact path={'/:pageId'} render={ (props) => <Section key={props.match.params.pageId} {...props} children={cardsArray}/> }/>
+                    </Switch>
                     <Pagination
                         children={LinksArray}
                     />
