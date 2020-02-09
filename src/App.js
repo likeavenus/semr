@@ -60,19 +60,7 @@ class App extends Component {
 
         const {multiplier} = this.state;
         let MAX_CARDS = 9;
-
-        // let cardsWeight = 0;
-        // for (let i = 0; i < cardsArray.length; i++) {
-        //     cardsWeight += cardsArray[i].props.weight;
-        // }
-        // console.log(cardsWeight);
-
-
         cardsArray = cardsArray.slice(multiplier * MAX_CARDS, (multiplier * MAX_CARDS) + MAX_CARDS);
-
-        // console.log('ARRAY', cardsArray);
-
-
 
         for (let i = 0; i < pages; i++) {
             RoutesArray.push(
@@ -83,10 +71,8 @@ class App extends Component {
             )
         }
 
-
-
         return (
-            <HashRouter basename={'/page'}>
+                <HashRouter basename={'/page'}>
                 <div className="App">
                     <Header/>
                     <CreateBox/>
