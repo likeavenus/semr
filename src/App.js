@@ -23,15 +23,28 @@ class App extends Component {
 
     render() {
 
+        const RoutesArray = [];
+        const LinksArray = [];
+        const pages = this.props.store.pages;
+
+        for (let i = 0; i < pages; i++) {
+            RoutesArray.push(
+                <Route key={i} path={`page=${i}`} component={Section}/>
+            )
+            LinksArray.push(
+                <Link key={i} className={pageStyles.link} to={`page=${i+1}`}>{i + 1}</Link>
+            )
+        }
+
         return (
             <HashRouter>
-
+                {RoutesArray}
                 <div className="App">
                     <Header/>
                     <CreateBox/>
                     <Section/>
                     <Pagination
-                        children={''}
+                        children={LinksArray}
                     />
                 </div>
             </HashRouter>

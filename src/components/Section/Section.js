@@ -7,7 +7,6 @@ class Section extends Component {
         const storeCards = this.props.store.cards;
         const cardsArray = [];
 
-
         function sliceText(string, maxLength) {
             return string.length > maxLength ? string.slice(0, maxLength) + '...' : string;
         }
