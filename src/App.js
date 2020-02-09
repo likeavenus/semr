@@ -8,10 +8,10 @@ import pageStyles from './components/Pagination/Pagination.scss';
 import {connect} from "react-redux";
 import {
     HashRouter,
-    // Switch,
     Route,
     Link
 } from "react-router-dom";
+import Card from "./components/Card/Card";
 
 
 class App extends Component {
@@ -30,10 +30,31 @@ class App extends Component {
         for (let i = 0; i < pages; i++) {
             RoutesArray.push(
                 <Route key={i} path={`page=${i}`} component={Section}/>
-            )
+            );
             LinksArray.push(
                 <Link key={i} className={pageStyles.link} to={`page=${i+1}`}>{i + 1}</Link>
             )
+        }
+
+        const storeCards = this.props.store.cards;
+        const cardsArray = [];
+
+        function sliceText(string, maxLength) {
+            return string.length > maxLength ? string.slice(0, maxLength) + '...' : string;
+        }
+        let id = 0;
+        for (let i of storeCards) {
+
+            cardsArray.push(
+                <Card
+                    key={id}
+                    file={i.file}
+                    cardTitle={sliceText(i.inputTitle, 40)}
+                    cardText={sliceText(i.inputDescription, 150)}
+                    type={sliceText(i.type, 12)}
+                />
+            );
+            id += 1;
         }
 
         return (
@@ -42,7 +63,9 @@ class App extends Component {
                 <div className="App">
                     <Header/>
                     <CreateBox/>
-                    <Section/>
+                    <Section
+                        children={cardsArray}
+                    />
                     <Pagination
                         children={LinksArray}
                     />
@@ -55,10 +78,5 @@ class App extends Component {
 export default connect(
     state => ({
         store: state
-    }),
-    dispatch => ({
-        handleIncreasePage: (action) => {
-            dispatch({type: action})
-        }
     })
 )(App);
