@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import styles from './CreateBox.scss';
 import fileIcon from './img/file-icon.png';
 import {connect} from 'react-redux';
-import {CREATE_CARD, INCREASE_PAGES} from "../../actions/actions";
+import {CREATE_CARD, INCREASE_PAGES, UPDATE_CURRENT_CARDS} from "../../actions/actions";
 
 class CreateBox extends Component {
     constructor(props) {
@@ -57,14 +57,14 @@ class CreateBox extends Component {
     handleCheckIsValidForm = (callback) => {
         const {file, inputTitle, inputDescription} = this.state;
         if (file !== null && inputTitle.trim() !== '' && inputDescription.trim() !== '') {
-            this.setState({
-                file: null,
-                inputTitle: '',
-                inputDescription: '',
-                type: '',
-                weight: 0,
-                popupIsActive: false
-            });
+            // this.setState({
+            //     file: null,
+            //     inputTitle: '',
+            //     inputDescription: '',
+            //     type: '',
+            //     weight: 0,
+            //     popupIsActive: false
+            // });
 
             callback();
         }
@@ -92,7 +92,7 @@ class CreateBox extends Component {
 
         const {totalWeight, pages} = this.props.store;
         let maxLength = 9;
-        // если общий вес карточек + множитель(трудно описать пока что, что это за множитель) без остатка делится на 10,
+        // если общий вес карточек + множитель триггера создания страницы без остатка делится на 10,
         // или, общий вес карточек больше чем произведение текущего количества страниц и максимальной длины страницы,  то добавляем страничку
         if (totalWeight && totalWeight + incrementOfMaxLength % maxLength === 0 || totalWeight > pages * maxLength) {
             this.props.onIncreasePages(INCREASE_PAGES);

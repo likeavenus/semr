@@ -9,6 +9,7 @@ import {connect} from "react-redux";
 import {
     HashRouter,
     Route,
+    Switch,
     Link
 } from "react-router-dom";
 import Card from "./components/Card/Card";
@@ -18,33 +19,33 @@ class App extends Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            multiplier: 0
+        }
+
     }
+
+    handleOnLinkClick = (id) => {
+        console.log(id);
+        this.setState({
+            multiplier: id
+        });
+    };
 
 
     render() {
 
         const RoutesArray = [];
         const LinksArray = [];
-        const pages = this.props.store.pages;
+        const {pages, cards, totalWeight} = this.props.store;
 
-        for (let i = 0; i < pages; i++) {
-            RoutesArray.push(
-                <Route key={i} path={`page=${i}`} component={Section}/>
-            );
-            LinksArray.push(
-                <Link key={i} className={pageStyles.link} to={`page=${i+1}`}>{i + 1}</Link>
-            )
-        }
-
-        const storeCards = this.props.store.cards;
-        const cardsArray = [];
+        let cardsArray = [];
 
         function sliceText(string, maxLength) {
             return string.length > maxLength ? string.slice(0, maxLength) + '...' : string;
         }
         let id = 0;
-        for (let i of storeCards) {
-
+        for (let i of cards) {
             cardsArray.push(
                 <Card
                     key={id}
@@ -52,20 +53,41 @@ class App extends Component {
                     cardTitle={sliceText(i.inputTitle, 40)}
                     cardText={sliceText(i.inputDescription, 150)}
                     type={sliceText(i.type, 12)}
+                    weight={i.weight}
                 />
             );
             id += 1;
         }
 
+        const {multiplier} = this.state;
+        let MAX_CARDS = 9;
+
+        // let cardsWeight = 0;
+        // for (let i = 0; i < cardsArray.length; i++) {
+        //     cardsWeight += cardsArray[i].props.weight;
+        // }
+        // console.log(cardsWeight);
+
+
+        cardsArray = cardsArray.slice(multiplier * MAX_CARDS, (multiplier * MAX_CARDS) + MAX_CARDS);
+
+        // console.log('ARRAY', cardsArray);
+
+        for (let i = 0; i < pages; i++) {
+            RoutesArray.push(
+                <Route key={i} render={(...props)=> <Section {...props} children={cardsArray}/>} exact path={`/:pageId`}/>
+            );
+            LinksArray.push(
+                <Link key={i} onClick={()=> {this.handleOnLinkClick(i)}} className={pageStyles.link} to={`/${i+1}`}>{i + 1}</Link>
+            )
+        }
+
         return (
-            <HashRouter>
-                {RoutesArray}
+            <HashRouter basename={'/page'}>
                 <div className="App">
                     <Header/>
                     <CreateBox/>
-                    <Section
-                        children={cardsArray}
-                    />
+                    <Switch>{RoutesArray}</Switch>
                     <Pagination
                         children={LinksArray}
                     />
