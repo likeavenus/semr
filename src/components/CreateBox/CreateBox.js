@@ -22,6 +22,7 @@ class CreateBox extends Component {
             type: '',
             popupIsActive: false,
             dragging: false,
+            incrementOfMaxLength: 0
         };
     }
 
@@ -41,6 +42,8 @@ class CreateBox extends Component {
             }, ()=> {
                 if (this.state.type === 'big') {
                     this.setState({weight: 2})
+                } else if (this.state.type === 'b') {
+                    this.setState({weight: 9})
                 } else {
                     this.setState({weight: 1})
                 }
@@ -68,7 +71,7 @@ class CreateBox extends Component {
     };
 
     handleSaveCard = (action, payload) => {
-        const {inputTitle, inputDescription, file} = this.state;
+        const {inputTitle, inputDescription, file, incrementOfMaxLength} = this.state;
 
         this.handleCheckIsValidForm(()=> {this.props.onSaveCard(action, payload)});
 
@@ -87,8 +90,17 @@ class CreateBox extends Component {
             this.inputDescription.current.style.border = '1px solid red';
         }
 
-        if (this.props.store.totalWeight && this.props.store.totalWeight % 9 === 0) {
-            this.props.onIncreasePages(INCREASE_PAGES)
+        const {totalWeight, pages} = this.props.store;
+        let maxLength = 9;
+        // если общий вес карточек + множитель(трудно описать пока что, что это за множитель) без остатка делится на 10,
+        // или, общий вес карточек больше чем произведение текущего количества страниц и максимальной длины страницы,  то добавляем страничку
+        if (totalWeight && totalWeight + incrementOfMaxLength % maxLength === 0 || totalWeight > pages * maxLength) {
+            this.props.onIncreasePages(INCREASE_PAGES);
+            if (pages === 1) {
+                this.setState({incrementOfMaxLength: incrementOfMaxLength + 1});
+            } else {
+                this.setState({incrementOfMaxLength: incrementOfMaxLength + 2});
+            }
         }
     };
 
