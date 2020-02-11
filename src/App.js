@@ -21,53 +21,68 @@ class App extends Component {
         super(props);
 
         this.state = {
-            multiplier: 0
+            multiplier: 0,
+            currentCards: [],
         }
 
     }
 
     handleOnLinkClick = (id) => {
         this.setState({
-            multiplier: id
+            multiplier: id,
         });
     };
 
-    componentDidUpdate(prevProps) {
-        if (prevProps !== this.props) {
-
-        }
+    componentDidMount() {
     }
+
+
+
 
     render() {
 
-
-        const RoutesArray = [];
         const LinksArray = [];
-        const {pages, cards, currentArray, totalWeight} = this.props.store;
-
         let cardsArray = [];
+        const {pages} = this.props.store;
+        const {multiplier, currentCards} = this.state;
+
         // обрезаем слишком длинные строки
         function sliceText(string, maxLength) {
             return string.length > maxLength ? string.slice(0, maxLength) + '...' : string;
         }
-        let id = 0;
-        for (let i of cards) {
-            cardsArray.push(
-                <Card
-                    key={id}
-                    file={i.file}
-                    cardTitle={sliceText(i.inputTitle, 40)}
-                    cardText={sliceText(i.inputDescription, 150)}
-                    type={sliceText(i.type, 12)}
-                    weight={i.weight}
-                />
-            );
-            id += 1;
+
+        const MAX_CARDS = 9;
+        if (currentCards.length) {
+            console.log(currentCards, 'RENDER');
+            for (let i = multiplier * MAX_CARDS; i < (multiplier * MAX_CARDS) + MAX_CARDS; i++) {
+                cardsArray.push(
+                    <Card
+                        key={i}
+                        file={currentCards[i].file}
+                        cardTitle={sliceText(currentCards[i].inputTitle, 40)}
+                        cardText={sliceText(currentCards[i].inputDescription, 150)}
+                        type={sliceText(currentCards[i].type, 12)}
+                        weight={currentCards[i].weight}
+                    />
+                );
+            }
         }
 
-        const {multiplier} = this.state;
-        let MAX_CARDS = 9;
-        cardsArray = cardsArray.slice(multiplier * MAX_CARDS, (multiplier * MAX_CARDS) + MAX_CARDS);
+        // let id = 0;
+        // for (let i of cards) {
+        //     cardsArray.push(
+        //         <Card
+        //             key={id}
+        //             file={i.file}
+        //             cardTitle={sliceText(i.inputTitle, 40)}
+        //             cardText={sliceText(i.inputDescription, 150)}
+        //             type={sliceText(i.type, 12)}
+        //             weight={i.weight}
+        //         />
+        //     );
+        //     id += 1;
+        // }
+
 
         for (let i = 0; i < pages; i++) {
             // RoutesArray.push(
