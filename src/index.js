@@ -5,13 +5,14 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {createStore} from "redux";
 import {Provider} from "react-redux";
-import {CREATE_CARD, INCREASE_PAGES, UPDATE_CURRENT_CARDS} from "./actions/actions";
+import {CREATE_CARD, INCREASE_PAGES, UPDATE_CURRENT_CARDS, UPDATE_CURRENT_PAGE} from "./actions/actions";
 
 const initialState = {
     cards: [],
     currentArray: [],
     totalWeight: 0,
-    pages: 1
+    pages: 1,
+    currentPage: 1
 };
 
 
@@ -22,8 +23,16 @@ function getCardsList(state = initialState, action) {
             return {...state, cards: [...state.cards, action.payload], totalWeight: state.totalWeight += action.payload.weight};
         case INCREASE_PAGES:
             return {...state, pages: state.pages += 1};
+        case UPDATE_CURRENT_PAGE:
+            return {...state, currentPage: action.payload};
+        case UPDATE_CURRENT_CARDS:
+            return updateCurrentArray(state, action);
         default: return {...state};
     }
+}
+
+function updateCurrentArray(state = [], action) {
+    return {...state,}
 }
 
 const store = createStore(getCardsList, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());

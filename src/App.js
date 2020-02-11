@@ -13,7 +13,7 @@ import {
     Link
 } from "react-router-dom";
 import Card from "./components/Card/Card";
-import {UPDATE_CURRENT_CARDS} from "./actions/actions";
+import {UPDATE_CURRENT_CARDS, UPDATE_CURRENT_PAGE} from "./actions/actions";
 
 
 class App extends Component {
@@ -31,6 +31,8 @@ class App extends Component {
         this.setState({
             multiplier: id,
         });
+
+        this.props.getNewCurrentPage(UPDATE_CURRENT_PAGE, id + 1);
     };
 
 
@@ -107,8 +109,14 @@ class App extends Component {
     }
 }
 
+
 export default connect(
     state => ({
         store: state
+    }),
+    dispatch => ({
+        getNewCurrentPage: (action, payload) => {
+            dispatch({type: action, payload: payload})
+        }
     })
 )(App);
