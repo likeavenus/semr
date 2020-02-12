@@ -10,11 +10,11 @@ import {
     HashRouter,
     Route,
     Switch,
-    Link
+    Link,
 } from "react-router-dom";
+
 import Card from "./components/Card/Card";
 import {UPDATE_CURRENT_CARDS, UPDATE_CURRENT_PAGE} from "./actions/actions";
-
 
 class App extends Component {
     constructor(props) {
@@ -22,7 +22,6 @@ class App extends Component {
 
         this.state = {
             multiplier: 0,
-            currentCards: [],
         }
 
     }
@@ -33,59 +32,36 @@ class App extends Component {
         });
 
         this.props.getNewCurrentPage(UPDATE_CURRENT_PAGE, id + 1);
+        this.props.updateCurrentCards(UPDATE_CURRENT_CARDS, id);
     };
-
 
 
     render() {
 
         const LinksArray = [];
         let cardsArray = [];
-        const {pages} = this.props.store;
-        const {multiplier, currentCards} = this.state;
+        const {pages, currentArray} = this.props.store;
 
         // обрезаем слишком длинные строки
         function sliceText(string, maxLength) {
             return string.length > maxLength ? string.slice(0, maxLength) + '...' : string;
         }
 
-        const MAX_CARDS = 9;
-        if (currentCards.length) {
-            console.log(currentCards, 'RENDER');
-            for (let i = multiplier * MAX_CARDS; i < (multiplier * MAX_CARDS) + MAX_CARDS; i++) {
-                cardsArray.push(
-                    <Card
-                        key={i}
-                        file={currentCards[i].file}
-                        cardTitle={sliceText(currentCards[i].inputTitle, 40)}
-                        cardText={sliceText(currentCards[i].inputDescription, 150)}
-                        type={sliceText(currentCards[i].type, 12)}
-                        weight={currentCards[i].weight}
-                    />
-                );
-            }
+        for (let i = 0; i < currentArray.length; i++) {
+            cardsArray.push(
+                <Card
+                    key={i}
+                    file={currentArray[i].file}
+                    cardTitle={sliceText(currentArray[i].inputTitle, 40)}
+                    cardText={sliceText(currentArray[i].inputDescription, 150)}
+                    type={sliceText(currentArray[i].type, 12)}
+                    weight={currentArray[i].weight}
+                />
+            );
         }
-
-        // let id = 0;
-        // for (let i of cards) {
-        //     cardsArray.push(
-        //         <Card
-        //             key={id}
-        //             file={i.file}
-        //             cardTitle={sliceText(i.inputTitle, 40)}
-        //             cardText={sliceText(i.inputDescription, 150)}
-        //             type={sliceText(i.type, 12)}
-        //             weight={i.weight}
-        //         />
-        //     );
-        //     id += 1;
-        // }
 
 
         for (let i = 0; i < pages; i++) {
-            // RoutesArray.push(
-            //     <Route key={i} render={()=> <Section key={multiplier} children={cardsArray}/>} exact path={`/:pageId`}/>
-            // );
             LinksArray.push(
                 <Link key={i} onClick={()=> {this.handleOnLinkClick(i)}} className={pageStyles.link} to={`/${i+1}`}>{i + 1}</Link>
             )
@@ -96,7 +72,6 @@ class App extends Component {
                 <div className="App">
                     <Header/>
                     <CreateBox/>
-                    {/*<Switch>{RoutesArray}</Switch>*/}
                     <Switch>
                         <Route exact path={'/:pageId'} render={ (props) => <Section key={props.match.params.pageId} {...props} children={cardsArray}/> }/>
                     </Switch>
@@ -117,6 +92,9 @@ export default connect(
     dispatch => ({
         getNewCurrentPage: (action, payload) => {
             dispatch({type: action, payload: payload})
+        },
+        updateCurrentCards: (action, payload) => {
+            dispatch({type: action, payload: payload});
         }
     })
 )(App);

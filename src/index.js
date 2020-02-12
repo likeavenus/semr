@@ -3,18 +3,18 @@ import ReactDOM from 'react-dom';
 import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import {createStore} from "redux";
+import {createStore, combineReducers} from "redux";
 import {Provider} from "react-redux";
 import {CREATE_CARD, INCREASE_PAGES, UPDATE_CURRENT_CARDS, UPDATE_CURRENT_PAGE} from "./actions/actions";
-
 const initialState = {
     cards: [],
     currentArray: [],
     totalWeight: 0,
     pages: 1,
-    currentPage: 1
+    currentPage: 1,
 };
 
+const store = createStore(getCardsList, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 
 function getCardsList(state = initialState, action) {
@@ -31,13 +31,21 @@ function getCardsList(state = initialState, action) {
     }
 }
 
-function updateCurrentArray(state = [], action) {
-    return {...state,}
+function updateCurrentArray(state, action) {
+    const currentArr = [];
+    const MAX_CARDS = 9;
+    for (let i = action.payload * MAX_CARDS; i < (action.payload * MAX_CARDS) + MAX_CARDS; i++) {
+        if (state.cards[i] !== undefined) {
+            currentArr.push(state.cards[i]);
+        }
+    }
+    return {...state, currentArray: currentArr};
 }
 
-const store = createStore(getCardsList, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
-console.log(store.getState());
+
+
+// console.log(store.getState());
 
 store.subscribe(() => {
     console.log('getState', store.getState());
