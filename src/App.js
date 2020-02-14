@@ -13,7 +13,6 @@ import {
     Link,
 } from "react-router-dom";
 
-import Card from "./components/Card/Card";
 import {UPDATE_CURRENT_CARDS, UPDATE_CURRENT_PAGE} from "./actions/actions";
 
 class App extends Component {
@@ -37,43 +36,29 @@ class App extends Component {
 
 
     render() {
-
         const LinksArray = [];
-        let cardsArray = [];
-        const {pages, currentArray} = this.props.store;
-
-        // обрезаем слишком длинные строки
-        function sliceText(string, maxLength) {
-            return string.length > maxLength ? string.slice(0, maxLength) + '...' : string;
-        }
-
-        for (let i = 0; i < currentArray.length; i++) {
-            cardsArray.push(
-                <Card
-                    key={i}
-                    file={currentArray[i].file}
-                    cardTitle={sliceText(currentArray[i].inputTitle, 40)}
-                    cardText={sliceText(currentArray[i].inputDescription, 150)}
-                    type={sliceText(currentArray[i].type, 12)}
-                    weight={currentArray[i].weight}
-                />
-            );
-        }
+        const RoutesArray = [];
+        const {pages} = this.props.store;
 
 
         for (let i = 0; i < pages; i++) {
             LinksArray.push(
                 <Link key={i} onClick={()=> {this.handleOnLinkClick(i)}} className={pageStyles.link} to={`/${i+1}`}>{i + 1}</Link>
             )
+            RoutesArray.push(
+
+            )
         }
 
+
         return (
-            <HashRouter basename={'/page'}>
+            <HashRouter basename={'/'}>
                 <div className="App">
                     <Header/>
                     <CreateBox/>
                     <Switch>
-                        <Route exact path={'/:pageId'} render={ (props) => <Section key={props.match.params.pageId} {...props} children={cardsArray}/> }/>
+                        <Route exact path={'/:pageId'}react render={()=> <Section/>}/>
+                        {/*{RoutesArray}*/}
                     </Switch>
                     <Pagination
                         children={LinksArray}
@@ -83,7 +68,6 @@ class App extends Component {
         )
     }
 }
-
 
 export default connect(
     state => ({

@@ -73,8 +73,10 @@ class CreateBox extends Component {
     handleSaveCard = (action, payload) => {
         const {inputTitle, inputDescription, file, incrementOfMaxLength} = this.state;
 
+
         this.handleCheckIsValidForm(()=> {
-            this.props.onSaveCard(action, payload)
+            this.props.onSaveCard(action, payload);
+            this.props.onUpdateCurrentCards(UPDATE_CURRENT_CARDS, this.props.store.currentPage - 1);
         });
 
         this.inputTitle.current.style.border = '1px solid #A6B0B3';
@@ -246,6 +248,9 @@ export default connect(
         },
         onIncreasePages: (action) => {
             dispatch({type: action})
+        },
+        onUpdateCurrentCards: (action, payload) => {
+            dispatch({type: action, payload: payload})
         }
     })
 )(CreateBox);

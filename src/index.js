@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import {createStore, combineReducers} from "redux";
+import {createStore} from "redux";
 import {Provider} from "react-redux";
 import {CREATE_CARD, INCREASE_PAGES, UPDATE_CURRENT_CARDS, UPDATE_CURRENT_PAGE} from "./actions/actions";
 const initialState = {
