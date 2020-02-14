@@ -57,7 +57,7 @@ class App extends Component {
                     <Header/>
                     <CreateBox/>
                     <Switch>
-                        <Route exact path={'/:pageId'}react render={()=> <Section/>}/>
+                        <Route exact path={'/:pageId'} render={()=> <Section/>}/>
                         {/*{RoutesArray}*/}
                     </Switch>
                     <Pagination
