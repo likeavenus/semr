@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/semr/static/css/main.c755527a.chunk.css",
+    "main.js": "/semr/static/js/main.c2c57396.chunk.js",
+    "main.js.map": "/semr/static/js/main.c2c57396.chunk.js.map",
+    "runtime-main.js": "/semr/static/js/runtime-main.bdf92e1d.js",
+    "runtime-main.js.map": "/semr/static/js/runtime-main.bdf92e1d.js.map",
+    "static/js/2.aa1b4881.chunk.js": "/semr/static/js/2.aa1b4881.chunk.js",
+    "static/js/2.aa1b4881.chunk.js.map": "/semr/static/js/2.aa1b4881.chunk.js.map",
+    "index.html": "/semr/index.html",
+    "precache-manifest.c81bd6e174a0495662cd927f1e34e25b.js": "/semr/precache-manifest.c81bd6e174a0495662cd927f1e34e25b.js",
+    "service-worker.js": "/semr/service-worker.js",
+    "static/css/main.c755527a.chunk.css.map": "/semr/static/css/main.c755527a.chunk.css.map",
+    "static/media/index.scss": "/semr/static/media/Ubuntu-Regular.ba4e7809.woff",
+    "static/media/CreateBox.scss": "/semr/static/media/close.0221075e.svg",
+    "static/media/logo.svg": "/semr/static/media/logo.81d7f444.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.bdf92e1d.js",
+    "static/js/2.aa1b4881.chunk.js",
+    "static/css/main.c755527a.chunk.css",
+    "static/js/main.c2c57396.chunk.js"
+  ]
+}
