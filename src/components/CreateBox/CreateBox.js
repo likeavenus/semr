@@ -57,14 +57,14 @@ class CreateBox extends Component {
     handleCheckIsValidForm = (callback) => {
         const {file, inputTitle, inputDescription} = this.state;
         if (file !== null && inputTitle.trim() !== '' && inputDescription.trim() !== '') {
-            // this.setState({
-            //     file: null,
-            //     inputTitle: '',
-            //     inputDescription: '',
-            //     type: '',
-            //     weight: 0,
-            //     popupIsActive: false
-            // });
+            this.setState({
+                file: null,
+                inputTitle: '',
+                inputDescription: '',
+                type: '',
+                weight: 0,
+                popupIsActive: false
+            });
 
             callback();
         }
