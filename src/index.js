@@ -31,6 +31,7 @@ function getCardsList(state = initialState, action) {
     }
 }
 
+
 function updateCurrentArray(state, action) {
     const currentArr = [];
     const MAX_CARDS = 9;

@@ -35,19 +35,16 @@ class App extends Component {
     };
 
 
+
     render() {
         const LinksArray = [];
-        const RoutesArray = [];
         const {pages} = this.props.store;
 
 
         for (let i = 0; i < pages; i++) {
             LinksArray.push(
                 <Link key={i} onClick={()=> {this.handleOnLinkClick(i)}} className={pageStyles.link} to={`/${i+1}`}>{i + 1}</Link>
-            )
-            RoutesArray.push(
-
-            )
+            );
         }
 
 
@@ -58,7 +55,6 @@ class App extends Component {
                     <CreateBox/>
                     <Switch>
                         <Route exact path={'/:pageId'} render={()=> <Section/>}/>
-                        {/*{RoutesArray}*/}
                     </Switch>
                     <Pagination
                         children={LinksArray}
