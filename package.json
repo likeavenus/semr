@@ -1,6 +1,6 @@
 {
   "homepage": "http://likeavenus.github.io/semr/",
-  "name": "spa-dev",
+  "name": "semr",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
