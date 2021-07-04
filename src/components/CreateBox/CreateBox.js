@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import styles from './CreateBox.scss';
 import fileIcon from './img/file-icon.png';
 import {connect} from 'react-redux';
-import {CREATE_CARD, INCREASE_PAGES} from "../../actions/actions";
+import {CREATE_CARD, INCREASE_PAGES, UPDATE_CURRENT_CARDS} from "../../actions/actions";
 
 class CreateBox extends Component {
     constructor(props) {
@@ -22,6 +22,7 @@ class CreateBox extends Component {
             type: '',
             popupIsActive: false,
             dragging: false,
+            incrementOfMaxLength: 0
         };
     }
 
@@ -41,6 +42,8 @@ class CreateBox extends Component {
             }, ()=> {
                 if (this.state.type === 'big') {
                     this.setState({weight: 2})
+                } else if (this.state.type === 'b') {
+                    this.setState({weight: 9})
                 } else {
                     this.setState({weight: 1})
                 }
@@ -68,10 +71,13 @@ class CreateBox extends Component {
     };
 
     handleSaveCard = (action, payload) => {
-        const {inputTitle, inputDescription, file} = this.state;
+        const {inputTitle, inputDescription, file, incrementOfMaxLength} = this.state;
 
-        this.handleCheckIsValidForm(()=> {this.props.onSaveCard(action, payload)});
 
+        this.handleCheckIsValidForm(()=> {
+            this.props.onSaveCard(action, payload);
+            this.props.onUpdateCurrentCards(UPDATE_CURRENT_CARDS, this.props.store.currentPage - 1);
+        });
 
         this.inputTitle.current.style.border = '1px solid #A6B0B3';
         this.labelFile.current.style.border = '1px solid #DEE3E5';
@@ -87,8 +93,17 @@ class CreateBox extends Component {
             this.inputDescription.current.style.border = '1px solid red';
         }
 
-        if (this.props.store.totalWeight && this.props.store.totalWeight % 9 === 0) {
-            this.props.onIncreasePages(INCREASE_PAGES)
+        const {totalWeight, pages} = this.props.store;
+        let maxLength = 9;
+        // если общий вес карточек + множитель триггера создания страницы без остатка делится на 10,
+        // или, общий вес карточек больше чем произведение текущего количества страниц и максимальной длины страницы,  то добавляем страничку
+        if (totalWeight && totalWeight + incrementOfMaxLength % maxLength === 0 || totalWeight > pages * maxLength) {
+            this.props.onIncreasePages(INCREASE_PAGES);
+            if (pages === 1) {
+                this.setState({incrementOfMaxLength: incrementOfMaxLength + 1});
+            } else {
+                this.setState({incrementOfMaxLength: incrementOfMaxLength + 2});
+            }
         }
     };
 
@@ -233,6 +248,9 @@ export default connect(
         },
         onIncreasePages: (action) => {
             dispatch({type: action})
+        },
+        onUpdateCurrentCards: (action, payload) => {
+            dispatch({type: action, payload: payload})
         }
     })
 )(CreateBox);

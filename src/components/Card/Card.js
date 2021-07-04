@@ -12,16 +12,20 @@ export default class Card extends Component {
                 <img className={styles.card_image} src={this.props.file} alt="some img"/>
             </div>;
 
-        if (this.props.type.toLowerCase() === 'big') {
-            cardStyles += ` ${styles.big}`;
+        if (this.props.type !== undefined) {
+            if (this.props.type.toLowerCase() === 'big') {
+                cardStyles += ` ${styles.big}`;
 
-            imageBox = null;
-            cardStyleBackground = {
-                backgroundImage: `url(${this.props.file})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center'
+                imageBox = null;
+                cardStyleBackground = {
+                    backgroundImage: `url(${this.props.file})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center'
+                }
             }
         }
+
+
         return (
             <a href={'/'} className={cardStyles} style={cardStyleBackground}>
                 {imageBox}
@@ -29,7 +33,7 @@ export default class Card extends Component {
                     <h3 className={styles.card_title}>{this.props.cardTitle}</h3>
                     <p className={styles.card_text}>{this.props.cardText}</p>
                 </div>
-                {this.props.type === '' || this.props.type.toLowerCase() === 'big' ? null : <span className={styles.card_type}>{this.props.type}</span>}
+                {this.props.type === '' || this.props.type ? this.props.type.toLowerCase() === 'big' ? null : <span className={styles.card_type}>{this.props.type}</span> : null}
             </a>
         );
     }

@@ -9,63 +9,53 @@ import {connect} from "react-redux";
 import {
     HashRouter,
     Route,
-    Link
+    Switch,
+    Link,
 } from "react-router-dom";
-import Card from "./components/Card/Card";
 
+import {UPDATE_CURRENT_CARDS, UPDATE_CURRENT_PAGE} from "./actions/actions";
 
 class App extends Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            multiplier: 0,
+        }
+
     }
+
+    handleOnLinkClick = (id) => {
+        this.setState({
+            multiplier: id,
+        });
+
+        this.props.getNewCurrentPage(UPDATE_CURRENT_PAGE, id + 1);
+        this.props.updateCurrentCards(UPDATE_CURRENT_CARDS, id);
+    };
+
 
 
     render() {
-
-        const RoutesArray = [];
         const LinksArray = [];
-        const pages = this.props.store.pages;
+        const {pages} = this.props.store;
+
 
         for (let i = 0; i < pages; i++) {
-            RoutesArray.push(
-                <Route key={i} path={`page=${i}`} component={Section}/>
-            );
             LinksArray.push(
-                <Link key={i} className={pageStyles.link} to={`page=${i+1}`}>{i + 1}</Link>
-            )
-        }
-
-        const storeCards = this.props.store.cards;
-        const cardsArray = [];
-
-        function sliceText(string, maxLength) {
-            return string.length > maxLength ? string.slice(0, maxLength) + '...' : string;
-        }
-        let id = 0;
-        for (let i of storeCards) {
-
-            cardsArray.push(
-                <Card
-                    key={id}
-                    file={i.file}
-                    cardTitle={sliceText(i.inputTitle, 40)}
-                    cardText={sliceText(i.inputDescription, 150)}
-                    type={sliceText(i.type, 12)}
-                />
+                <Link key={i} onClick={()=> {this.handleOnLinkClick(i)}} className={pageStyles.link} to={`/${i+1}`}>{i + 1}</Link>
             );
-            id += 1;
         }
+
 
         return (
-            <HashRouter>
-                {RoutesArray}
+            <HashRouter basename={'/'}>
                 <div className="App">
                     <Header/>
                     <CreateBox/>
-                    <Section
-                        children={cardsArray}
-                    />
+                    <Switch>
+                        <Route exact path={'/:pageId'} render={()=> <Section/>}/>
+                    </Switch>
                     <Pagination
                         children={LinksArray}
                     />
@@ -78,5 +68,13 @@ class App extends Component {
 export default connect(
     state => ({
         store: state
+    }),
+    dispatch => ({
+        getNewCurrentPage: (action, payload) => {
+            dispatch({type: action, payload: payload})
+        },
+        updateCurrentCards: (action, payload) => {
+            dispatch({type: action, payload: payload});
+        }
     })
 )(App);
